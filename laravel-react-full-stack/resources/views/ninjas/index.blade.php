@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My first laravel project</title>
+    <title>Ninja List</title>
 </head>
 <body>
-    <h1>Welcome to my first Laravel project</h1>
-    <p>Click the button below to view the list of ninjas:</p>
-
-    <a href="/ninjas" class="btn">Find Ninjas</a>
+    <h2>Currently Available Ninjas</h2>
+    <ul>
+        <li>Naruto</li>
+        <li>Sasuke</li>
+        <li>Kakashi</li>
+    </ul>
 </body>
 </html>
