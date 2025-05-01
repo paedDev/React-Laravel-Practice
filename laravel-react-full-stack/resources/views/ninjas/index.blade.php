@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninja List</title>
-</head>
-<body>
+<x-layout>
+  <div class="text-center">
     <h2>Currently Available Ninjas</h2>
     {{-- blade directives conditional statement --}}
     @if ($greeting == "hello")
-    <p>Hi from insde the if statement</p>
+     <p>Hi from insde the if statement</p>
     @endif
     <p>{{$greeting}}</p>
 
@@ -17,12 +11,13 @@
     <ul>
         @foreach($ninjas as $ninja)
             <li>
-                <p>
-                    {{$ninja['name']}}
-                </p>
-                <a href="/ninjas/{{$ninja['id']}}">View Details</a>
+              <x-card href="/ninjas/{{$ninja['id']}}" :highlights="$ninja['skill'] > 70">
+                <h3>{{$ninja['name']}}</h3>
+              </x-card>
+              
             </li>
         @endforeach
     </ul>
-</body>
-</html>
+  </div>
+   
+</x-layout>

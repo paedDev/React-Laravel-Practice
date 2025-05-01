@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
 
 Route::get("/ninjas", function () {
@@ -14,7 +14,19 @@ Route::get("/ninjas", function () {
     return view("ninjas.index", ["greeting" => "hello", "ninjas" => $ninjas]);
 });
 
+Route::get('/ninjas/create', function () {
+    return view('ninjas.create');
+});
+
 Route::get('/ninjas/{id}', function ($id) {
     //fetch record with id
     return view("ninjas.show", ["id" => $id]);
+});
+
+Route::get("/about", function () {
+    return view('pages.about');
+});
+
+Route::get("/contact", function () {
+    return view('pages.contact');
 });

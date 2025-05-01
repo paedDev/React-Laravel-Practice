@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninjas</title>
-</head>
-<body>
-    <h2>Current Available Ninjas</h2>
-    <p>Click to see all the ninjas available</p>
-    <a href="/ninjas">
+<x-layout class="">
+    <h2 class="">Current Available Ninjas</h2>
+    <p class="">Click to see all the ninjas available</p>
+    <a href="/ninjas" class="btn mt-4 inline-block">
     Find Ninjas</a>
 </body>
 </html>
+
+</x-layout>
