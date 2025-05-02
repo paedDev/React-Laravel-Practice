@@ -34,7 +34,7 @@
               <div class="ml-10 flex items-baseline space-x-4">
                 <x-nav-links href="/" :active="request()->is('/')">Home</x-nav-links>
                 <x-nav-links href="/jobs" :active="request()->is('jobs')">Jobs </x-nav-links>
-                <x-nav-links href="/contact" :active="request()->is('contact')">Contacts</x-nav-links>
+                <x-nav-links href="/languages" :active="request()->is('languages')">Language</x-nav-links>
               </div>
             </div>
           </div>
@@ -100,8 +100,8 @@
             aria-current="page">Home</a>
           <a href="/jobs"
             class="{{request()->is('jobs') ? 'bg-gray-900 text-white ' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} block rounded-md  px-3 py-2 text-base font-medium ">Jobs</a>
-          <a href="/contact"
-            class="{{request()->is('contact') ? 'bg-gray-900 text-white ' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} block rounded-md  px-3 py-2 text-base font-medium ">Contact</a>
+          <a href="/languages"
+            class="{{request()->is('languages') ? 'bg-gray-900 text-white ' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}} block rounded-md  px-3 py-2 text-base font-medium ">Language</a>
 
         </div>
         <div class="border-t border-gray-700 pt-4 pb-3">
