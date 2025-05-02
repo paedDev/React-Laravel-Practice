@@ -1,4 +1,5 @@
-
 <x-layout heading="Home">
-    <h1>hello from Home page</h1>
+    <h1> Welcome to Home Page</h1>
+
+
 </x-layout>
