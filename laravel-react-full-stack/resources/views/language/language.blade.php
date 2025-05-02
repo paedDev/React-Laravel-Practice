@@ -4,7 +4,7 @@
     </x-slot:heading>
  
     <p>
-        <span class="font-semibold">{{ $language['description'] }}</span> per year.
+        <span class="font-semibold">{{ $language['description'] }}</span> 
     </p>
     
 </x-layout>

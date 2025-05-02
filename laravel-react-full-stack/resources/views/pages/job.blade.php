@@ -1,6 +1,6 @@
 <x-layout heading="Job">
     <x-slot:heading>
-        Job
+        {{$job['title']}}'s Job Details
     </x-slot:heading>
 
     <h2 class="font-bold text-lg mb-4">
