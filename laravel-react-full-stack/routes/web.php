@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
+use App\Models\JobListing;
 use App\Models\Language;
 
 Route::get('/', function () {
@@ -28,14 +28,14 @@ Route::get('/ninjas/{id}', function ($id) {
 
 
 Route::get('/jobs', function () {
-    return view('pages.jobs', ['jobs' => Job::all()]);
+    return view('pages.jobs', ['jobs' => JobListing::all()]);
 });
 
 Route::get('/jobs/{id}', function ($id) {
     // $job = Arr::first(Job::all(), function ($job) use ($id) {
     //     return $job['id'] === $id;
     // });
-    $job = Job::find($id);
+    $job = JobListing::find($id);
     return view('pages.job', ['job' => $job]);
 });
 Route::get("/contact", function () {
