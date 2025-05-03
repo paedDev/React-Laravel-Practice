@@ -7,6 +7,6 @@
         {{ $job['title'] }}
     </h2>
     <p>
-        This job pays <span class="font-semibold">{{ $job['Salary'] }}</span> per year.
+        This job pays <span class="font-semibold">{{ $job['salary'] }}</span> per year.
     </p>
 </x-layout>
