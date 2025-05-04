@@ -4,6 +4,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
 use App\Models\Language;
+use App\Models\Post;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -44,7 +45,7 @@ Route::get("/contact", function () {
 
 Route::get('/languages', function () {
 
-    return view('language.languages', ['languages' => Language::getAllLanguage()]);
+    return view('language.languages', ['languages' => Language::all()]);
 });
 
 Route::get('/languages/{id}', function ($id) {
@@ -55,6 +56,15 @@ Route::get('/languages/{id}', function ($id) {
     // });
 
     // $language = Arr::first($languages, fn($language) => $language['id'] === $id);
-    $language = Language::findLanguage($id);
+    $language = Language::find($id);
     return view('language.language', ['language' => $language]);
+});
+
+// Post area
+Route::get('/posts', function () {
+    return view('posts.posts', ['posts' => Post::all()]);
+});
+Route::get("/posts/{id}", function ($id) {
+    $post = Post::find($id);
+    return view('posts.post', ['post' => $post]);
 });
