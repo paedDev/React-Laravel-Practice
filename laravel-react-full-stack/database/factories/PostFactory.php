@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Employer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
+            'employer_id' => Employer::factory(),
             'title' => fake()->realText(30),
+
             'body' => fake()->realText(200)
             // $table->string('title');
             // $table->text('body');
