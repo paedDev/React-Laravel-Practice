@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comments;
 use App\Models\Employer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,7 @@ class PostFactory extends Factory
         return [
             'employer_id' => Employer::factory(),
             'title' => fake()->realText(30),
-
+            'comments' => Comments::factory(),
             'body' => fake()->realText(200)
             // $table->string('title');
             // $table->text('body');

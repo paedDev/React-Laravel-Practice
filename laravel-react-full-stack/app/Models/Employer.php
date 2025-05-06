@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Employer extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployerFactory> */
+    protected $fillable = ['name'];
     use HasFactory;
+
+    public function Jobs()
+    {
+        return $this->hasMany(JobListing::class);
+    }
 }

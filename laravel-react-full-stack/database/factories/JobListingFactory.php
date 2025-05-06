@@ -19,7 +19,7 @@ class JobListingFactory extends Factory
     {
         return [
             'title' => fake()->jobTitle(),
-            'employer_id' => Employer::factory(),
+            // 'employer_id' => Employer::factory(),
             'salary' => '$' . fake()->numberBetween(5000, 20000),
         ];
     }
