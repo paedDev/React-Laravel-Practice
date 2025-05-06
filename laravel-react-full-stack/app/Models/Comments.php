@@ -11,8 +11,8 @@ class Comments extends Model
     /** @use HasFactory<\Database\Factories\CommentsFactory> */
     use HasFactory;
 
-    public function post()
-    {
-        return $this->belongsTo(Post::class);
-    }
+    // public function post()
+    // {
+    //     return $this->belongsTo(Post::class);
+    // }
 }
