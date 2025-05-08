@@ -29,7 +29,15 @@ Route::get('/ninjas/{id}', function ($id) {
 
 
 Route::get('/jobs', function () {
-    return view('pages.jobs', ['jobs' => JobListing::all()]);
+    // Eager loading together with Employer table
+    // $jobs = JobListing::with('employer')->get();
+    // paginate with links in the jobs.blade
+
+    // Paginations
+    // $jobs = JobListing::with('employer')->paginate(10);
+    $jobs = JobListing::with('employer')->simplePaginate(10);
+    // $jobs = JobListing::with('employer')->cursorPaginate(10);
+    return view('pages.jobs', ['jobs' => $jobs]);
 });
 
 Route::get('/jobs/{id}', function ($id) {
@@ -44,8 +52,8 @@ Route::get("/contact", function () {
 });
 
 Route::get('/languages', function () {
-
-    return view('language.languages', ['languages' => Language::all()]);
+    $languages = Language::simplePaginate(12);
+    return view('language.languages', ['languages' => $languages]);
 });
 
 Route::get('/languages/{id}', function ($id) {

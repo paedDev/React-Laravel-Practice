@@ -17,9 +17,15 @@
                 </x-language-card>
             </a>
             </li>
-          
+
+        
             @endforeach
+            
     </ul>
+    <div class="mt-4">
+        {{$languages->links()}}
+    </div>
+  
     </div>
    
 </x-layout>
