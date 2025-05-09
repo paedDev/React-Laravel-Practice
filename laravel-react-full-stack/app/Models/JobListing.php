@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class JobListing extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'salary'];
+    // fillable 
+    protected $fillable = ['employer_id', 'title', 'salary'];
+    // protected $guarded = [];
 
     public function employer()
     {

@@ -35,27 +35,56 @@ Route::get('/jobs', function () {
 
     // Paginations
     // $jobs = JobListing::with('employer')->paginate(10);
-    $jobs = JobListing::with('employer')->simplePaginate(10);
+    //latest here is to add a recennt created
+    $jobs = JobListing::with('employer')->latest()->simplePaginate(10);
     // $jobs = JobListing::with('employer')->cursorPaginate(10);
-    return view('pages.jobs', ['jobs' => $jobs]);
+    return view('jobs.index', ['jobs' => $jobs]);
 });
 
+Route::get('/jobs/create', function () {
+    return view('jobs.create');
+});
 Route::get('/jobs/{id}', function ($id) {
     // $job = Arr::first(Job::all(), function ($job) use ($id) {
     //     return $job['id'] === $id;
     // });
     $job = JobListing::find($id);
-    return view('pages.job', ['job' => $job]);
+    return view('jobs.show', ['job' => $job]);
 });
+
+Route::post('/jobs', function () {
+    //validation skip
+    //dd(request()->all());
+    // dd(request('title'));
+    JobListing::create([
+        'title' => request('title'),
+        'salary' =>  request('salary'),
+        'employer_id' => 1
+    ]);
+    return redirect('/jobs');
+});
+
 Route::get("/contact", function () {
     return view('pages.contact');
 });
 
+
 Route::get('/languages', function () {
-    $languages = Language::simplePaginate(12);
-    return view('language.languages', ['languages' => $languages]);
+    $languages = Language::latest()->simplePaginate(12);
+    return view('language.index', ['languages' => $languages]);
 });
 
+Route::get("/languages/create", function () {
+    return view("language.create");
+});
+Route::post("/languages", function () {
+    // dd(request()->all());
+    Language::create([
+        'title' => request('title'),
+        'description' => request('description')
+    ]);
+    return redirect('/languages');
+});
 Route::get('/languages/{id}', function ($id) {
 
     // other way to use function and arrow function
@@ -65,14 +94,26 @@ Route::get('/languages/{id}', function ($id) {
 
     // $language = Arr::first($languages, fn($language) => $language['id'] === $id);
     $language = Language::find($id);
-    return view('language.language', ['language' => $language]);
+    return view('language.show', ['language' => $language]);
 });
 
 // Post area
 Route::get('/posts', function () {
-    return view('posts.posts', ['posts' => Post::all()]);
+    $posts = Post::latest()->paginate(10);
+    return view('posts.index', ['posts' => $posts]);
+});
+Route::get("/posts/create", function () {
+    return view('posts.create');
+});
+
+Route::post("/posts", function () {
+    Post::create([
+        'title' => request('title'),
+        'body' => request('body')
+    ]);
+    return redirect('/posts')->with('success', 'Post created successfully!');
 });
 Route::get("/posts/{id}", function ($id) {
     $post = Post::find($id);
-    return view('posts.post', ['post' => $post]);
+    return view('posts.show', ['post' => $post]);
 });
