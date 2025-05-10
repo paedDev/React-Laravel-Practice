@@ -27,7 +27,7 @@ Route::get('/ninjas/{id}', function ($id) {
     return view("ninjas.show", ["id" => $id]);
 });
 
-
+// index
 Route::get('/jobs', function () {
     // Eager loading together with Employer table
     // $jobs = JobListing::with('employer')->get();
@@ -40,10 +40,11 @@ Route::get('/jobs', function () {
     // $jobs = JobListing::with('employer')->cursorPaginate(10);
     return view('jobs.index', ['jobs' => $jobs]);
 });
-
+// render create
 Route::get('/jobs/create', function () {
     return view('jobs.create');
 });
+// show
 Route::get('/jobs/{id}', function ($id) {
     // $job = Arr::first(Job::all(), function ($job) use ($id) {
     //     return $job['id'] === $id;
@@ -51,7 +52,7 @@ Route::get('/jobs/{id}', function ($id) {
     $job = JobListing::find($id);
     return view('jobs.show', ['job' => $job]);
 });
-
+// 
 Route::post('/jobs', function () {
     //validation skip
     //dd(request()->all());
@@ -68,6 +69,45 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
+// edit
+Route::get('/jobs/{id}/edit', function ($id) {
+
+    $job = JobListing::find($id);
+    return view('jobs.edit', ['job' => $job]);
+});
+// update
+// edit
+Route::patch('/jobs/{id}', function ($id) {
+    // validate never trust the user
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' =>  ['required']
+    ]);
+    // authorize permssion to update this (on hold)
+    // update 
+    $job = JobListing::find($id);
+    // there are two ways to update
+    // 1
+    // $job->title = request('title');
+    // $job->title = request('salary');
+    // $job->save();
+    // 2
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary')
+    ]);
+    // persist
+    // redirect back to jobs page
+    return redirect('/jobs/' . $job->id);
+});
+// destroy or delete
+Route::delete('/jobs/{id}', function ($id) {
+    // or u can inline it
+    JobListing::findOrFail($id)->delete();
+    // $job = JobListing::findOrFail($id);
+    // $job->delete();
+    return redirect('/jobs');
+});
 Route::get("/contact", function () {
     return view('pages.contact');
 });
