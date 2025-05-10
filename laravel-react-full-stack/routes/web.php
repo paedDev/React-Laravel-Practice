@@ -56,6 +56,10 @@ Route::post('/jobs', function () {
     //validation skip
     //dd(request()->all());
     // dd(request('title'));
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required', 'min:4']
+    ]);
     JobListing::create([
         'title' => request('title'),
         'salary' =>  request('salary'),
@@ -79,6 +83,10 @@ Route::get("/languages/create", function () {
 });
 Route::post("/languages", function () {
     // dd(request()->all());
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'description' => ['required', 'max:255']
+    ]);
     Language::create([
         'title' => request('title'),
         'description' => request('description')
@@ -107,6 +115,12 @@ Route::get("/posts/create", function () {
 });
 
 Route::post("/posts", function () {
+    // always validate
+    request()->validate([
+        'title' => ['required', 'min:5'],
+        'body' => ['required', 'max:255']
+    ]);
+
     Post::create([
         'title' => request('title'),
         'body' => request('body')
