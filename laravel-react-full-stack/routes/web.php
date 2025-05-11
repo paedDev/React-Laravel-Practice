@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\JobListingController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
@@ -28,122 +30,123 @@ Route::get('/ninjas/{id}', function ($id) {
 });
 
 // index
-Route::get('/jobs', function () {
-    // Eager loading together with Employer table
-    // $jobs = JobListing::with('employer')->get();
-    // paginate with links in the jobs.blade
 
-    // Paginations
-    // $jobs = JobListing::with('employer')->paginate(10);
-    //latest here is to add a recennt created
-    $jobs = JobListing::with('employer')->latest()->simplePaginate(10);
-    // $jobs = JobListing::with('employer')->cursorPaginate(10);
-    return view('jobs.index', ['jobs' => $jobs]);
-});
+// Route::get('/jobs', function () {
+//     // Eager loading together with Employer table
+//     // $jobs = JobListing::with('employer')->get();
+//     // paginate with links in the jobs.blade
+
+//     // Paginations
+//     // $jobs = JobListing::with('employer')->paginate(10);
+//     //latest here is to add a recennt created
+//     $jobs = JobListing::with('employer')->latest()->simplePaginate(10);
+//     // $jobs = JobListing::with('employer')->cursorPaginate(10);
+//     return view('jobs.index', ['jobs' => $jobs]);
+// });
 // render create
-Route::get('/jobs/create', function () {
-    return view('jobs.create');
-});
+// Route::get('/jobs/create', function () {
+//     return view('jobs.create');
+// });
 // show
-Route::get('/jobs/{id}', function ($id) {
-    // $job = Arr::first(Job::all(), function ($job) use ($id) {
-    //     return $job['id'] === $id;
-    // });
-    $job = JobListing::find($id);
-    return view('jobs.show', ['job' => $job]);
-});
-// 
-Route::post('/jobs', function () {
-    //validation skip
-    //dd(request()->all());
-    // dd(request('title'));
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required', 'min:4']
-    ]);
-    JobListing::create([
-        'title' => request('title'),
-        'salary' =>  request('salary'),
-        'employer_id' => 1
-    ]);
-    return redirect('/jobs');
-});
+// Route::get('/jobs/{id}', function ($id) {
+//     // $job = Arr::first(Job::all(), function ($job) use ($id) {
+//     //     return $job['id'] === $id;
+//     // });
+//     $job = JobListing::find($id);
+//     return view('jobs.show', ['job' => $job]);
+// });
+// // 
+// Route::post('/jobs', function () {
+//     //validation skip
+//     //dd(request()->all());
+//     // dd(request('title'));
+//     request()->validate([
+//         'title' => ['required', 'min:3'],
+//         'salary' => ['required', 'min:4']
+//     ]);
+//     JobListing::create([
+//         'title' => request('title'),
+//         'salary' =>  request('salary'),
+//         'employer_id' => 1
+//     ]);
+//     return redirect('/jobs');
+// });
 
-// edit
-Route::get('/jobs/{id}/edit', function ($id) {
+// // edit
+// Route::get('/jobs/{id}/edit', function ($id) {
 
-    $job = JobListing::find($id);
-    return view('jobs.edit', ['job' => $job]);
-});
-// update
-// edit
-Route::patch('/jobs/{id}', function ($id) {
-    // validate never trust the user
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' =>  ['required']
-    ]);
-    // authorize permssion to update this (on hold)
-    // update 
-    $job = JobListing::find($id);
-    // there are two ways to update
-    // 1
-    // $job->title = request('title');
-    // $job->title = request('salary');
-    // $job->save();
-    // 2
-    $job->update([
-        'title' => request('title'),
-        'salary' => request('salary')
-    ]);
-    // persist
-    // redirect back to jobs page
-    return redirect('/jobs/' . $job->id);
-});
-// destroy or delete
-Route::delete('/jobs/{id}', function ($id) {
-    // or u can inline it
-    JobListing::findOrFail($id)->delete();
-    // $job = JobListing::findOrFail($id);
-    // $job->delete();
-    return redirect('/jobs');
-});
+//     $job = JobListing::find($id);
+//     return view('jobs.edit', ['job' => $job]);
+// });
+// // update
+// // edit
+// Route::patch('/jobs/{id}', function ($id) {
+//     // validate never trust the user
+//     request()->validate([
+//         'title' => ['required', 'min:3'],
+//         'salary' =>  ['required']
+//     ]);
+//     // authorize permssion to update this (on hold)
+//     // update 
+//     $job = JobListing::find($id);
+//     // there are two ways to update
+//     // 1
+//     // $job->title = request('title');
+//     // $job->title = request('salary');
+//     // $job->save();
+//     // 2
+//     $job->update([
+//         'title' => request('title'),
+//         'salary' => request('salary')
+//     ]);
+//     // persist
+//     // redirect back to jobs page
+//     return redirect('/jobs/' . $job->id);
+// });
+// // destroy or delete
+// Route::delete('/jobs/{id}', function ($id) {
+//     // or u can inline it
+//     JobListing::findOrFail($id)->delete();
+//     // $job = JobListing::findOrFail($id);
+//     // $job->delete();
+//     return redirect('/jobs');
+// });
 Route::get("/contact", function () {
     return view('pages.contact');
 });
 
 
-Route::get('/languages', function () {
-    $languages = Language::latest()->simplePaginate(12);
-    return view('language.index', ['languages' => $languages]);
-});
+// Route::get('/languages', function () {
+//     $languages = Language::latest()->simplePaginate(12);
+//     return view('language.index', ['languages' => $languages]);
+// });
 
-Route::get("/languages/create", function () {
-    return view("language.create");
-});
-Route::post("/languages", function () {
-    // dd(request()->all());
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'description' => ['required', 'max:255']
-    ]);
-    Language::create([
-        'title' => request('title'),
-        'description' => request('description')
-    ]);
-    return redirect('/languages');
-});
-Route::get('/languages/{id}', function ($id) {
+// Route::get("/languages/create", function () {
+//     return view("language.create");
+// });
+// Route::post("/languages", function () {
+//     // dd(request()->all());
+//     request()->validate([
+//         'title' => ['required', 'min:3'],
+//         'description' => ['required', 'max:255']
+//     ]);
+//     Language::create([
+//         'title' => request('title'),
+//         'description' => request('description')
+//     ]);
+//     return redirect('/languages');
+// });
+// Route::get('/languages/{id}', function ($id) {
 
-    // other way to use function and arrow function
-    // $language = Arr::first(Language::getAllLanguage(), function ($language) use ($id) {
-    //     return $language['id'] === $id;
-    // });
+//     // other way to use function and arrow function
+//     // $language = Arr::first(Language::getAllLanguage(), function ($language) use ($id) {
+//     //     return $language['id'] === $id;
+//     // });
 
-    // $language = Arr::first($languages, fn($language) => $language['id'] === $id);
-    $language = Language::find($id);
-    return view('language.show', ['language' => $language]);
-});
+//     // $language = Arr::first($languages, fn($language) => $language['id'] === $id);
+//     $language = Language::find($id);
+//     return view('language.show', ['language' => $language]);
+// });
 
 // Post area
 Route::get('/posts', function () {
@@ -171,3 +174,18 @@ Route::get("/posts/{id}", function ($id) {
     $post = Post::find($id);
     return view('posts.show', ['post' => $post]);
 });
+
+
+// JOB Route Controller starts here
+Route::get('/jobs', [JobListingController::class, 'index']);
+Route::get('/jobs/create', [JobListingController::class, 'create']);
+Route::get("/jobs/{id}", [JobListingController::class, 'show']);
+Route::post('/jobs', [JobListingController::class, 'store']);
+Route::get("/jobs/{id}/edit", [JobListingController::class, 'edit']);
+Route::patch('/jobs/{id}', [JobListingController::class, 'update']);
+Route::delete('/jobs/{id}', [JobListingController::class, 'destroy']);
+
+// Route::resource('JobListing', JobListingController::class);
+Route::resource("languages", LanguageController::class);
+// Route::get("/languages", [LanguageController::class, 'index']);
+// Route::get("/languages/create", [LanguageController::class, 'create']);
