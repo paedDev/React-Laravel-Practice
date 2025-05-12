@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JobListingController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
@@ -28,7 +29,13 @@ Route::get('/ninjas/{id}', function ($id) {
     //fetch record with id
     return view("ninjas.show", ["id" => $id]);
 });
+Route::get("/contact", function () {
+    return view('pages.contact');
+});
 
+Route::resource('posts', JobListingController::class);
+Route::resource('jobs', JobListingController::class);
+Route::resource("languages", LanguageController::class);
 // index
 
 // Route::get('/jobs', function () {
@@ -111,10 +118,6 @@ Route::get('/ninjas/{id}', function ($id) {
 //     // $job->delete();
 //     return redirect('/jobs');
 // });
-Route::get("/contact", function () {
-    return view('pages.contact');
-});
-
 
 // Route::get('/languages', function () {
 //     $languages = Language::latest()->simplePaginate(12);
@@ -149,43 +152,52 @@ Route::get("/contact", function () {
 // });
 
 // Post area
-Route::get('/posts', function () {
-    $posts = Post::latest()->paginate(10);
-    return view('posts.index', ['posts' => $posts]);
-});
-Route::get("/posts/create", function () {
-    return view('posts.create');
-});
+// Route::get('/posts', function () {
+//     $posts = Post::latest()->paginate(10);
+//     return view('posts.index', ['posts' => $posts]);
+// });
+// Route::get("/posts/create", function () {
+//     return view('posts.create');
+// });
 
-Route::post("/posts", function () {
-    // always validate
-    request()->validate([
-        'title' => ['required', 'min:5'],
-        'body' => ['required', 'max:255']
-    ]);
+// Route::post("/posts", function () {
+//     // always validate
+//     request()->validate([
+//         'title' => ['required', 'min:5'],
+//         'body' => ['required', 'max:255']
+//     ]);
 
-    Post::create([
-        'title' => request('title'),
-        'body' => request('body')
-    ]);
-    return redirect('/posts')->with('success', 'Post created successfully!');
-});
-Route::get("/posts/{id}", function ($id) {
-    $post = Post::find($id);
-    return view('posts.show', ['post' => $post]);
-});
+//     Post::create([
+//         'title' => request('title'),
+//         'body' => request('body')
+//     ]);
+//     return redirect('/posts')->with('success', 'Post created successfully!');
+// });
+// Route::get("/posts/{id}", function ($id) {
+//     $post = Post::find($id);
+//     return view('posts.show', ['post' => $post]);
+// });
 
 
 // JOB Route Controller starts here
-Route::get('/jobs', [JobListingController::class, 'index']);
-Route::get('/jobs/create', [JobListingController::class, 'create']);
-Route::get("/jobs/{id}", [JobListingController::class, 'show']);
-Route::post('/jobs', [JobListingController::class, 'store']);
-Route::get("/jobs/{id}/edit", [JobListingController::class, 'edit']);
-Route::patch('/jobs/{id}', [JobListingController::class, 'update']);
-Route::delete('/jobs/{id}', [JobListingController::class, 'destroy']);
+// Route::get('/jobs', [JobListingController::class, 'index']);
+// Route::get('/jobs/create', [JobListingController::class, 'create']);
+// Route::get("/jobs/{id}", [JobListingController::class, 'show']);
+// Route::post('/jobs', [JobListingController::class, 'store']);
+// Route::get("/jobs/{id}/edit", [JobListingController::class, 'edit']);
+// Route::patch('/jobs/{id}', [JobListingController::class, 'update']);
+// Route::delete('/jobs/{id}', [JobListingController::class, 'destroy']);
 
-// Route::resource('JobListing', JobListingController::class);
-Route::resource("languages", LanguageController::class);
+// language route here
 // Route::get("/languages", [LanguageController::class, 'index']);
 // Route::get("/languages/create", [LanguageController::class, 'create']);
+
+
+// post here
+// Route::get('/posts', [PostController::class, 'index']);
+// Route::get('/posts/create', [PostController::class, 'create']);
+// Route::post('/posts', [PostController::class, 'store']);
+// Route::get('/posts/{id}', [PostController::class, 'show']);
+// Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
+// Route::patch('/posts/{id}', [PostController::class, 'update']);
+// Route::delete('/posts/{id}', [PostController::class, 'destroy']);
