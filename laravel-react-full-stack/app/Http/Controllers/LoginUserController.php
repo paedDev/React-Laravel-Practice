@@ -27,7 +27,7 @@ class LoginUserController extends Controller
         ]);
         if (! Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
-                'email' => 'Sorry, thos credentials do not match.'
+                'email' => 'Sorry, those credentials do not match.'
             ]);
         }
 
