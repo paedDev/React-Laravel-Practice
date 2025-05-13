@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\JobListingController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisteredUserController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
@@ -36,6 +38,15 @@ Route::get("/contact", function () {
 Route::resource('posts', JobListingController::class);
 Route::resource('jobs', JobListingController::class);
 Route::resource("languages", LanguageController::class);
+
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+Route::get("/login", [LoginUserController::class, 'create']);
+Route::post("/login", [LoginUserController::class, 'store']);
+Route::post("/logout", [LoginUserController::class, 'destroy']);
+
+
 // index
 
 // Route::get('/jobs', function () {
