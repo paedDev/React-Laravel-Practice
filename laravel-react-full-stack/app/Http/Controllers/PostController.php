@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -22,7 +24,7 @@ class PostController extends Controller
     {
         $posts = Post::latest()->paginate();
         // dd($posts->items());
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -41,48 +43,47 @@ class PostController extends Controller
         //validate
         //authorize
         //return
-        request()->validate([
+        $attributes = request()->validate([
             'title' => ['required', 'min:3'],
             'body' => ['required']
         ]);
-        $post = Post::create([
-            'title' => request('title'),
-            'body' => request('body')
-        ]);
+        $post = Auth::user()->posts()->create($attributes);
 
-        return redirect('/posts');
+
+
+        return redirect()->route('posts.index');
     }
 
     /**
      * Display the specified resource.
      * GET|HEAD        posts/{post} ............ posts.show › JobListingController@show  
      * */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        $posts = Post::find($id);
-        return view('posts.show', ['post' => $posts]);
+
+        return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     //   GET|HEAD        posts/{post}/edit ....... posts.edit › JobListingController@edit 
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        $posts = Post::find($id);
-        return view('posts.edit', ['post' => $posts]);
+        return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Post $post)
     {
+
         $validateData = request()->validate([
             'title' => 'required',
             'body' => 'required'
         ]);
-        $post = Post::find($id);
+
         $post->update([
             'title' => request('title'),
             'body' => request('body')
@@ -94,9 +95,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        $post = Post::findORfail($id)->delete();
+        $post->delete();
         return redirect("/posts");
     }
 }

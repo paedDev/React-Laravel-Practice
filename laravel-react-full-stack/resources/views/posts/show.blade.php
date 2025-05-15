@@ -10,18 +10,22 @@
 
     <div class=" flex items-center space-x-3 mt-3">
         <div class="">
-            <x-button class="rounded-r-md" href="/posts/{{ $post->id }}/edit">
-                Edit post
-            </x-button>
-            <div>
-                <form action="/posts/{{ $post->id }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded">
-                        Delete
-                    </button>
-                </form>
-            </div>
+            @can('edit', $post)
+                <x-button class="rounded-r-md" href="/posts/{{ $post->id }}/edit">
+                    Edit post
+                </x-button>
+            @endcan
+            @can('delete', $post)
+                <div>
+                    <form action="/posts/{{ $post->id }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            @endcan
 
         </div>
 

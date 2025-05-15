@@ -35,22 +35,34 @@ Route::get("/contact", function () {
     return view('pages.contact');
 });
 
-Route::resource('posts', JobListingController::class);
+// Route::resource('posts', PostController::class);
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::post('/posts', [PostController::class, 'store'])->middleware('auth');
+Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/posts/{post}/edit', [PostController::class, 'edit'])
+    ->middleware('auth')
+    ->can('edit', 'post');
+Route::patch('/posts/{post}', [PostController::class, 'update'])
+    ->middleware('auth')
+    ->can('update', 'post');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])
+    ->middleware('auth')
+    ->can('delete', 'post');
+
 Route::get('/jobs', [JobListingController::class, 'index']);
 Route::get('/jobs/create', [JobListingController::class, 'create']);
 Route::get("/jobs/{job}", [JobListingController::class, 'show']);
 Route::post('/jobs', [JobListingController::class, 'store'])->middleware('auth');
-
 Route::get("/jobs/{job}/edit", [JobListingController::class, 'edit'])
     ->middleware('auth')
     ->can('edit', 'job');
-
 Route::patch('/jobs/{job}', [JobListingController::class, 'update'])
     ->middleware('auth')
-    ->can('edit', 'job');;
+    ->can('update', 'job');;
 Route::delete('/jobs/{job}', [JobListingController::class, 'destroy'])
     ->middleware('auth')
-    ->can('edit', 'job');;
+    ->can('delete', 'job');;
 
 
 Route::resource("languages", LanguageController::class);
