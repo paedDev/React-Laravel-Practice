@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobListing;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 class JobListingController extends Controller
 {
@@ -19,9 +23,9 @@ class JobListingController extends Controller
     {
         return view('jobs.create');
     }
-    public function show($id)
+    public function show(JobListing $job)
     {
-        $job = JobListing::find($id);
+
         return view('jobs.show', ['job' => $job]);
     }
     public function store()
@@ -42,31 +46,31 @@ class JobListingController extends Controller
         ]);
         return redirect('/jobs');
     }
-    public function edit($id)
+    public function edit(JobListing $job)
     {
-        $job = JobListing::find($id);
-        return view('jobs.edit', ['job' => $job]);
+        return view('jobs.edit', compact('job'));
     }
-    public function update($id)
+    public function update(JobListing $job)
     {
         //validate
         // authorization
         // update
         //return
+
         request()->validate([
             'title' => ['required', 'min:3'],
             'salary' => ['required']
         ]);
-        $job = JobListing::find($id);
         $job->update([
             'title' => request("title"),
             'salary' => request('salary')
         ]);
         return redirect('/jobs/' . $job->id);
     }
-    public function destroy($id)
+    public function destroy(JobListing $job)
     {
-        $job = JobListing::findOrFail($id)->delete();
+
+        $job->delete();
         return redirect('/jobs');
     }
 }

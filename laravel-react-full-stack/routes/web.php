@@ -36,13 +36,29 @@ Route::get("/contact", function () {
 });
 
 Route::resource('posts', JobListingController::class);
-Route::resource('jobs', JobListingController::class);
+Route::get('/jobs', [JobListingController::class, 'index']);
+Route::get('/jobs/create', [JobListingController::class, 'create']);
+Route::get("/jobs/{job}", [JobListingController::class, 'show']);
+Route::post('/jobs', [JobListingController::class, 'store'])->middleware('auth');
+
+Route::get("/jobs/{job}/edit", [JobListingController::class, 'edit'])
+    ->middleware('auth')
+    ->can('edit', 'job');
+
+Route::patch('/jobs/{job}', [JobListingController::class, 'update'])
+    ->middleware('auth')
+    ->can('edit', 'job');;
+Route::delete('/jobs/{job}', [JobListingController::class, 'destroy'])
+    ->middleware('auth')
+    ->can('edit', 'job');;
+
+
 Route::resource("languages", LanguageController::class);
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::get("/login", [LoginUserController::class, 'create']);
+Route::get("/login", [LoginUserController::class, 'create'])->name('login');
 Route::post("/login", [LoginUserController::class, 'store']);
 Route::post("/logout", [LoginUserController::class, 'destroy']);
 
