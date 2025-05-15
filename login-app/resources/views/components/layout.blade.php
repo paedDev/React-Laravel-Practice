@@ -13,7 +13,7 @@
         <nav class="bg-gray-800">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
+                    <div class="flex items-center ">
                         <div class="shrink-0">
                             <img class="size-8"
                                 src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
@@ -30,6 +30,24 @@
                                 <x-nav-links href="/projects" :active="request()->is('projects')">
                                     Projects
                                 </x-nav-links>
+
+                            </div>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-4 flex items-center md:ml-6">
+                                @guest
+                                    <x-nav-links href="/login" :active="request()->is('login')">Log in</x-nav-links>
+                                    <x-nav-links href="/register" :active="request()->is('register')">Register</x-nav-links>
+                                @endguest
+                                @auth
+                                    <form action="/logout" method="POST">
+                                        @csrf
+                                        <x-form-button>Log out</x-form-button>
+                                    </form>
+                                @endauth
+
+
+
 
                             </div>
                         </div>
