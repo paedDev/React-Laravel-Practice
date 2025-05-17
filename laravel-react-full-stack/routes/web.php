@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
 use App\Models\Language;
 use App\Models\Post;
+use Illuminate\Support\Facades\Mail;
 
+// testing mail 
+// Route::get("test", function () {
+//     Mail::to("jannoelpaed@yahoo.com")->send(
+//         new App\Mail\JobPosted()
+//     );
+//     return 'Done';
+// });
 Route::get('/', function () {
     return view('pages.home');
 });
