@@ -2,9 +2,7 @@
     <x-slot:heading>
         Post
     </x-slot:heading>
-
     <div>
-
         <ul class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 p-4 gap-4">
             @foreach ($posts as $post)
                 <li class=" h-50 overflow-hidden shadow-xl text-white">

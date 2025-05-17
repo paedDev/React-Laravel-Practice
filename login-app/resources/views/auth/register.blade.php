@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot:heading>
-        Login Page
+        Register Page
     </x-slot:heading>
     <form method="POST" action="/register">
         @csrf

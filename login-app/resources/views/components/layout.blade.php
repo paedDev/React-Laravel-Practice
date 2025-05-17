@@ -21,15 +21,19 @@
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
-                                <x-nav-links href="/" :active="request()->is('/')">
-                                    Home
-                                </x-nav-links>
-                                <x-nav-links href="/posts" :active="request()->is('posts')">
-                                    Posts
-                                </x-nav-links>
-                                <x-nav-links href="/projects" :active="request()->is('projects')">
-                                    Projects
-                                </x-nav-links>
+                                @auth
+
+                                    <x-nav-links href="/" :active="request()->is('/')">
+                                        Home
+                                    </x-nav-links>
+                                    <x-nav-links href="/posts" :active="request()->is('posts')">
+                                        Posts
+                                    </x-nav-links>
+                                    <x-nav-links href="/projects" :active="request()->is('projects')">
+                                        Projects
+                                    </x-nav-links>
+
+                                @endauth
 
                             </div>
                         </div>

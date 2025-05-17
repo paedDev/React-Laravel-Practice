@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -17,8 +18,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Posts::latest()->simplePaginate(12);
-        return view('posts.index', ['posts' => $posts]);
+        $posts = Posts::with('employer')->latest()->simplePaginate(12);
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -32,12 +33,15 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store()
     {
         $attributes = request()->validate([
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+
         ]);
+
+        $attributes['employer_id'] = '1';
         $post = Posts::create($attributes);
 
         return redirect('/posts');
@@ -49,10 +53,10 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Posts $post)
     {
-        $post = Posts::find($id);
-        return view('posts.show', ['post' => $post]);
+
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -61,33 +65,30 @@ class PostsController extends Controller
     //   PUT|PATCH       posts/{post} ........ posts.update › JobListingController@update  
     //   DELETE          posts/{post} ...... posts.destroy › JobListingController@destroy  
     //   GET|HEAD        posts/{post}/edit ....... posts.edit › JobListingController@edit 
-    public function edit($id)
+    public function edit(Posts $post)
     {
-
-        $post = Posts::find($id);
-        return view('posts.edit', ['post' => $post]);
+        return view('posts.edit', compact('post'));
         /**
          * Update the specified resource in storage.
          */
     }
-    public function update(Request $request,  $id)
+    public function update(Posts $post)
     {
 
         $attributes = request()->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
-        $posts = Posts::find($id);
-        $posts->update($attributes);
+        $post->update($attributes);
         return redirect('/posts');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Posts $post)
     {
-        $post = Posts::findOrFail($id)->delete();
+        $post->delete();
         return redirect("/posts");
     }
 }

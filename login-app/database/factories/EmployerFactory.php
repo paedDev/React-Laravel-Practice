@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Employer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Posts>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employer>
  */
-class PostsFactory extends Factory
+class EmployerFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,9 +19,8 @@ class PostsFactory extends Factory
     public function definition(): array
     {
         return [
-            'employer_id' => Employer::factory(),
-            'title' => fake()->firstNameFemale(),
-            'description' => fake()->paragraph()
+            'name' => fake()->company(),
+            'user_id' => User::factory()
         ];
     }
 }
