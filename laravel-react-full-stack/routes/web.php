@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Jobs\TranslateJob;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobListing;
@@ -19,6 +20,14 @@ use Illuminate\Support\Facades\Mail;
 //     );
 //     return 'Done';
 // });
+Route::get("test", function () {
+    $job = JobListing::first();
+    TranslateJob::dispatch($job);
+    // dispatch(function () {
+    //     logger("hello from the queue!");
+    // })->delay(5);
+    return "DOne";
+});
 Route::get('/', function () {
     return view('pages.home');
 });

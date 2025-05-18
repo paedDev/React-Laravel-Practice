@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laravel Tutorials</title>
-    @vite(['resources/css/app.css']) <!-- Add this line -->
+    @vite(['resources/css/app.css', 'resources/js/app.js']) <!-- Add this line -->
     <script src="https://cdn.tailwindcss"></script>
 
 
