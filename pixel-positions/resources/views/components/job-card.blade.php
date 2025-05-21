@@ -11,14 +11,14 @@
         </div>
         <div class="flex justify-between items-center mt-auto">
             <div class="">
-                <x-tag>
-                    tags
+                <x-tag size='small'>
+                    Backend
                 </x-tag>
-                <x-tag>
-                    tags
+                <x-tag size='small'>
+                    Frontend
                 </x-tag>
-                <x-tag>
-                    tags
+                <x-tag size='small'>
+                    Manager
                 </x-tag>
             </div>
             <x-employer-logo :width="42" />
