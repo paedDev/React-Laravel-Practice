@@ -14,7 +14,7 @@
 
 </head>
 
-<body class="bg-black font-hanken ">
+<body class="bg-black font-hanken pb-10">
 
     <div class="px-10 ">
         <nav class="flex items-center justify-between py-4 border-b border-white/20">
