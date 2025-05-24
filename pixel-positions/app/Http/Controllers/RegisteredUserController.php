@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'logo' => $logoPath
         ]);
 
-        Auth::login($user);
-        return redirect('/');
+
+        return redirect('/login')->with('message', 'Registeration successful. Please log in');
     }
 }
